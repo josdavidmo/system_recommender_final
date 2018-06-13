@@ -1,0 +1,6 @@
+#.pyc
+*.pyc
+
+#virtualenv
+system_recommender_final_env/
+system_recommender_final_env/* 
