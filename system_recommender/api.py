@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from models import Artwork
 import pandas
 import numpy as np
 from rest_framework.views import APIView
@@ -45,7 +46,7 @@ class Recommendation(APIView):
         return is_model.recommend(user_id)
 
     def post(self, request):
-        triplets_file = 'data/train_data.csv'
+        pieces = UserRating.objects.all().values('user__full_name', 'artwork__url', 'rating')
         piece_df_1 = pandas.read_csv(triplets_file, header=0)
         user_id = request.data["user_id"]
         results = request.data["survey"]
