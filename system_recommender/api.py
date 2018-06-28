@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from models import Artwork
-import pandas
+
 import numpy as np
+import pandas
 from rest_framework.views import APIView
 from sklearn.cross_validation import train_test_split
 
+from models import Artwork, UserRating
 from utils import Recommenders
 
 
@@ -14,30 +15,27 @@ class Recommendation(APIView):
     used to manage users recommendations
     """
 
-    def get_recommendation(self, piece_df_1, user_id):
-
-        # Read userid-pieceid-listen_count triplets
-        # This step might take time to download data from external sources
-        triplets_file = 'data/train_data.csv'
-        pieces_metadata_file = 'data/metadata.csv'
-
+    def get_recommendation(self, piece_df_1, user_id, piece_df_1):
         # Read piece  metadata
-        piece_df_2 = pandas.read_csv(pieces_metadata_file, header=0)
-        piece_df_2['obraautor'] = piece_df_2['nombre'].map(
-            str) + " - " + piece_df_2['autor']
+        qs = Artwork.objects.all().extra(select={'artwork__id': 'id'}).values(
+            'artwork__id', 'title', 'url', 'author__id', 'gender__id')
+        piece_df_2 = qs.to_dataframe()
+        piece_df_2['obraautor'] = piece_df_2['title'].map(
+            str) + " - " + piece_df_2['author_id']
         # Merge the two dataframes above to create input dataframe for recommender systems
-        piece_df = pandas.merge(piece_df_1, piece_df_2, on="obra", how="left")
+        piece_df = pandas.merge(piece_df_1, piece_df_2,
+                                on="artwork__id", how="left")
         # Merge piece title and artist_name columns to make a merged column
-        piece_df['obraautor'] = piece_df['nombre'].map(
-            str) + " - " + piece_df['autor']
+        piece_df['obraautor'] = piece_df['artwork__id'].map(
+            str) + " - " + piece_df['author_id']
 
-        users = piece_df['usuario'].unique()
-        paints = piece_df['obra'].unique()
+        users = piece_df['user__id'].unique()
+        paints = piece_df['artwork__id'].unique()
 
         train_data, test_data = train_test_split(
             piece_df, test_size=0.20, random_state=0)
         is_model = Recommenders.item_similarity_recommender_py()
-        is_model.create(train_data, piece_df_2, 'usuario', 'obra')
+        is_model.create(train_data, piece_df_2, 'user__id', 'author__id')
 
         user_id = users[user_id]
         user_items = is_model.get_user_items(user_id)
@@ -46,17 +44,18 @@ class Recommendation(APIView):
         return is_model.recommend(user_id)
 
     def post(self, request):
-        pieces = UserRating.objects.all().values('user__full_name', 'artwork__url', 'rating')
-        piece_df_1 = pandas.read_csv(triplets_file, header=0)
+        qs = UserRating.objects.all().values('user__id', 'artwork__id', 'rating')
+        piece_df_1 = qs.to_dataframe()
         user_id = request.data["user_id"]
         results = request.data["survey"]
         matrix = []
         for result in results:
             matrix.append([result["piece"], result["score"]])
         results = pandas.DataFrame(
-            matrix, columns=["usuario", "obra", "puntuacion"])
+            matrix, columns=["user__id", "artwork__id", "rating"])
         results_total = piece_df_1.append(results)
-        recommendations = self.get_recommendation(user_id, results_total)
+        recommendations = self.get_recommendation(
+            user_id, results_total, piece_df_1)
         pieces = []
         for index, row in recommendations.iterrows():
             pieces.append(row['obra'])

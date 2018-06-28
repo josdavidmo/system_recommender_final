@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from sklearn.cross_validation import train_test_split
-from sklearn.externals import joblib
-import numpy as np
-import pandas
 import sys
 import time
 
+import numpy as np
+import pandas
 from django.shortcuts import render
 from django.views import View
+from sklearn.cross_validation import train_test_split
+from sklearn.externals import joblib
+
 
 class Popularity_recommender_py(View):
     def __init__(self):
