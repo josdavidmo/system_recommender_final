@@ -1,0 +1,265 @@
+.buttons {
+    width: 1000px;
+    height: 500px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.buttons_initial {
+    width: 500px;
+    height: 250px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+button.initial {
+    width: 200px;
+    height: 150px;
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50; /* Green */
+    border-radius: 12px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input[type="radio"]{
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 3px;
+}
+
+.radio-group{
+  margin-left: 50px;
+}
+
+form{
+  box-shadow: 1px 2px 5px 0 #000000;
+  padding: 40px;
+}
+
+.results{
+  box-shadow: 1px 2px 5px 0 #000000;
+  padding: 40px;
+}
+
+.results-form {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width: 100px;
+    height: 100px;
+    padding: 8px;
+
+    border: 2px solid #fff;
+    color: #fff;
+    text-align: center;
+
+    font: 15px Arial, sans-serif;
+}
+/* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+body {
+  background-color: #eee;
+  margin: 0;
+  position: relative;
+  overflow: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+
+[id^="top-bar"] {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+  min-height: 350px;
+}
+
+[id^="drop-panel"] {
+  min-height: 400px;
+  background: white;
+  padding: 10px;
+  margin: 10px;
+  overflow-x: auto;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+}
+[id^="drop-panel"] header {
+  padding-left: 10px;
+  font-size: 12px;
+}
+
+.content {
+  flex: 1;
+}
+
+
+[id^="scroll-box"] {
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+[id^="tile-container"] {
+  display: inline-flex;
+}
+
+.tile-wrapper {
+  width: 210px;
+  height: 300px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tile0 {
+  background-color: mediumvioletred;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  width: 200px;
+  height: 300px;
+  cursor: move;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.tile0.clone {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.tile0.dropped {
+  background: cornflowerblue;
+}
+.tile1 {
+  background-color: mediumvioletred;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  width: 200px;
+  height: 300px;
+  cursor: move;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.tile1.clone {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.tile1.dropped {
+  background: cornflowerblue;
+}
+.tile2 {
+  background-color: mediumvioletred;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  width: 200px;
+  height: 300px;
+  cursor: move;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.tile2.clone {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.tile2.dropped {
+  background: cornflowerblue;
+}
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+.tile3 {
+  background-color: mediumvioletred;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  width: 200px;
+  height: 300px;
+  cursor: move;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.tile3.clone {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.tile3.dropped {
+  background: cornflowerblue;
+}
+.tile4 {
+  background-color: mediumvioletred;
+  color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  width: 200px;
+  height: 300px;
+  cursor: move;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.tile4.clone {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.tile4.dropped {
+  background: cornflowerblue;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

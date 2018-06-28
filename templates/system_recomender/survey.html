@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medición de Involucramiento y Liderazgo</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../static/vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/resources/css/styles.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+
+</head>
+<body ng-app="formlyApp" ng-controller="MainController as vm">
+  <main id="main0" class="container col-md-8 col-md-offset-4">
+    <section id="top-bar0">
+      <div id="clone-container0">
+        <div id="scroll-box0">
+          <div id="tile-container0">
+            <div class="tile-wrapper" ng-repeat="piece in steps_1">
+              <div class="tile0">
+                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content"></section>
+    <section id="drop-panel0">
+      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+    </section>
+  </main>
+  <main id="main1" class="container col-md-8 col-md-offset-4" style="display:none">
+    <section id="top-bar1">
+      <div id="clone-container1">
+        <div id="scroll-box1">
+          <div id="tile-container1">
+            <div class="tile-wrapper" ng-repeat="piece in steps_2">
+              <div class="tile1">
+                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content"></section>
+    <section id="drop-panel1">
+      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+    </section>
+  </main>
+  <main id="main2" class="container col-md-8 col-md-offset-4" style="display:none">
+    <section id="top-bar2">
+      <div id="clone-container2">
+        <div id="scroll-box2">
+          <div id="tile-container2">
+            <div class="tile-wrapper" ng-repeat="piece in steps_3">
+              <div class="tile2">
+                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content"></section>
+    <section id="drop-panel2">
+      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+    </section>
+  </main>
+  <main id="main3" class="container col-md-8 col-md-offset-4" style="display:none">
+    <section id="top-bar3">
+      <div id="clone-container3">
+        <div id="scroll-box3">
+          <div id="tile-container3">
+            <div class="tile-wrapper" ng-repeat="piece in steps_4">
+              <div class="tile3">
+                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content"></section>
+    <section id="drop-panel3">
+      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+    </section>
+  </main>
+  <main id="main4" class="container col-md-8 col-md-offset-4" style="display:none">
+    <section id="top-bar4">
+      <div id="clone-container4">
+        <div id="scroll-box4">
+          <div id="tile-container4">
+            <div class="tile-wrapper" ng-repeat="piece in steps_5">
+              <div class="tile4">
+                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content"></section>
+    <section id="drop-panel4">
+      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+    </section>
+  </main>
+  <main id="main5" class="container col-md-8 col-md-offset-4" style="display:none">
+    <section id="top-bar0">
+      <div id="clone-container0">
+        <div id="scroll-box0">
+          <div id="tile-container0">
+            <div class="tile-wrapper" ng-repeat="piece in recommendations">
+              <div class="tile0">
+                <img src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <button class="btn float-right btn-primary" style="margin:20px" onclick="changeSurvey()">Siguiente</button>
+</body>
+
+    <!-- Application Dependencies -->
+    <script src="../../static/vendors/jquery/jquery-3.3.1.js"></script>
+    <script src="../../static/vendors/api-check/api-check.js"></script>
+    <script src="../../static/vendors/angular/angular.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/utils/Draggable.min.js'></script>
+
+
+
+    <!-- Application Scripts -->
+    <script src="../../static/resources/js/variables.js"></script>
+    <script src="../../static/resources/js/app.js"></script>
+    <script src="../../static/resources/js/MainController.js"></script>
+    <script>
+    var index = 0;
+    function changeSurvey(){
+      if (index==5) {
+        $scope.getRecommendations();
+      }else{
+        $("#main"+(index-1)).hide();
+        $("#main"+index).show();
+        setTimeout(
+          function() {
+              var container = $("#clone-container"+index);
+              var scrollBox = $("#scroll-box"+index);
+              var dropPanel = $("#drop-panel"+index);
+              var tiles     = $(".tile"+index);
+              var threshold = "50%";
+
+              tiles.each(function() {
+
+                var element = $(this);
+                var wrapper = element.parent();
+                var offset  = element.position();
+
+                var scope = {
+                  clone   : element.clone().addClass("clone").prependTo(container),
+                  element : element,
+                  wrapper : wrapper,
+                  width   : wrapper.outerWidth(),
+                  dropped : false,
+                  moved   : false,
+                  get x() { return getPosition(wrapper, offset).x; },
+                  get y() { return getPosition(wrapper, offset).y; }
+                };
+
+                scope.draggable = createDraggable(scope);
+
+                element.on("mousedown touchstart", scope, startDraggable);
+              });
+
+              // START DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function startDraggable(event) {
+
+                var tile = event.data;
+
+                TweenLite.set(tile.element, { autoAlpha: 0 });
+                TweenLite.set(tile.clone, { x: tile.x, y: tile.y, autoAlpha: 1 });
+
+                tile.draggable.startDrag(event.originalEvent);
+              }
+
+              // CREATE DRAGGABLE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function createDraggable(tile) {
+
+                var clone   = tile.clone;
+                var wrapper = tile.wrapper;
+
+                tile.draggable = new Draggable(clone, {
+                  onPress   : setActive,
+                  onDrag    : collapseSpace,
+                  onRelease : dropTile
+                });
+
+                return tile.draggable;
+                ///////
+
+                function setActive() {
+                  TweenLite.to(clone, 0.15, { scale: 1.2, autoAlpha: 0.75 });
+                }
+
+                function collapseSpace() {
+                  if (!tile.moved) {
+                    if (!this.hitTest(wrapper)) {
+                      tile.moved = true;
+                      TweenLite.to(wrapper, 0.3, { width: 0 });
+                    }
+                  }
+                }
+
+                function dropTile() {
+
+                  var className = undefined;
+
+                  if (this.hitTest(dropPanel, threshold) && !tile.dropped) {
+                    dropPanel.append(wrapper);
+                    tile.dropped = true;
+                    className = "+=dropped";
+                  }
+
+                  moveBack(tile, className);
+                }
+              }
+
+              // MOVE BACK :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function moveBack(tile, className) {
+
+                var clone   = tile.clone;
+                var element = tile.element;
+                var wrapper = tile.wrapper;
+
+                TweenLite.to(wrapper, 0.2, { width: tile.width });
+                TweenLite.to(clone, 0.3, { scale: 1, autoAlpha: 1, x: tile.x, y: tile.y, onComplete: done });
+
+                if (className) TweenLite.to([element, clone], 0.3, { className: className });
+
+                function done() {
+                  tile.moved = false;
+                  TweenLite.set(clone, { autoAlpha: 0 });
+                  TweenLite.set(element, { autoAlpha: 1 });
+                }
+              }
+
+              // GET POSITION ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function getPosition(wrapper, offset) {
+
+                var position1 = wrapper.offset();
+                var position2 = container.offset();
+
+                return {
+                  x: position1.left - position2.left + offset.left,
+                  y: position1.top  - position2.top  + offset.top
+                };
+              }
+            index = index+1;
+          }, 1000);
+
+      }
+
+    }
+    changeSurvey()
+    </script>
+
+
+    <script>
+    $( document ).ready(function() {
+      $(".radio-group").addClass("row");
+
+    });
+    </script>
+
+</html>
