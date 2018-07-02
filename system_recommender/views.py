@@ -281,7 +281,6 @@ def get_recommendation(piece_df_1,user_id):
 def registry_survey(request):
     triplets_file = 'data/train_data.csv'
     piece_df_1 = pandas.read_csv(triplets_file, header=0)
-    user_id = request.POST["usert_id"]
     results = request.POST["survey"]
     matrix = []
     for result in results:

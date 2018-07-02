@@ -5,7 +5,7 @@
 
 steps = [
   [{"url":"../../static/obras/Roberto Páramo/Chircal.jpg","title":"Chircal","id":"https://drive.google.com/file/d/1KRS9d6oTRGgiGlCyByDy89HCe5vi6GDP/view?usp=sharing"},
-   {"url":"../../static/obras/Santiago Cárdenas/Pareja.jpg","title":"Pareja",id:"https://drive.google.com/file/d/1dzuIV4g68PzzQR-olu-nNJaRdIVdLylq/view?usp=sharing"},
+   {"url":"../../static/obras/Santiago Cárdenas/Pareja.jpg","title":"Pareja","id":"https://drive.google.com/file/d/1dzuIV4g68PzzQR-olu-nNJaRdIVdLylq/view?usp=sharing"},
    {"url":"../../static/obras/Santiago S.J. Páramo Ortiz/CabezadesantoSanIgnacio.jpg","title":"CabezadesantoSanIgnacio",id:""},
    {"url":"../../static/obras/Saturnio Ramírez/Unbillarenlaciudad2.jpg","title":"Unbillarenlaciudad"},
    {"url":"../../static/obras/Sergio Trujillo/Alaestatuadellibertador2.jpg","title":"Alaestatuadellibertador"},
