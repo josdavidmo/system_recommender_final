@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope) {
+app.controller('MainController', function($scope,$http) {
   $scope.steps_1 = steps[0];
   $scope.steps_2 = steps[1];
   $scope.steps_3 = steps[2];
@@ -7,143 +7,145 @@ app.controller('MainController', function($scope) {
   $scope.user_id = ""
   $scope.recommendations = [];
 
-  var index = 0;
+  var index = -1;
   $scope.changeSurvey = function(){
-    console.log("hola");
     $("#user_id").hide()
     if (index==5) {
       getRecommendations();
     }else{
-      $("#main"+(index-1)).hide();
-      $("#main"+index).show();
-      setTimeout(
-        function() {
-            var container = $("#clone-container"+index);
-            var scrollBox = $("#scroll-box"+index);
-            var dropPanel = $("#drop-panel"+index);
-            var tiles     = $(".tile"+index);
-            var threshold = "50%";
+      var images = $("#drop-panel"+index).find("img")
+      if (index==-1 || images.length == 6) {
+        index = index+1;
+        $("#main"+(index-1)).hide();
+        $("#main"+index).show();
+        setTimeout(
+          function() {
+              var container = $("#clone-container"+index);
+              var scrollBox = $("#scroll-box"+index);
+              var dropPanel = $("#drop-panel"+index);
+              var tiles     = $(".tile"+index);
+              var threshold = "50%";
 
-            tiles.each(function() {
+              tiles.each(function() {
 
-              var element = $(this);
-              var wrapper = element.parent();
-              var offset  = element.position();
+                var element = $(this);
+                var wrapper = element.parent();
+                var offset  = element.position();
 
-              var scope = {
-                clone   : element.clone().addClass("clone").prependTo(container),
-                element : element,
-                wrapper : wrapper,
-                width   : wrapper.outerWidth(),
-                dropped : false,
-                moved   : false,
-                get x() { return getPosition(wrapper, offset).x; },
-                get y() { return getPosition(wrapper, offset).y; }
-              };
+                var scope = {
+                  clone   : element.clone().addClass("clone").prependTo(container),
+                  element : element,
+                  wrapper : wrapper,
+                  width   : wrapper.outerWidth(),
+                  dropped : false,
+                  moved   : false,
+                  get x() { return getPosition(wrapper, offset).x; },
+                  get y() { return getPosition(wrapper, offset).y; }
+                };
 
-              scope.draggable = createDraggable(scope);
+                scope.draggable = createDraggable(scope);
 
-              element.on("mousedown touchstart", scope, startDraggable);
-            });
-
-            // START DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            function startDraggable(event) {
-
-              var tile = event.data;
-
-              TweenLite.set(tile.element, { autoAlpha: 0 });
-              TweenLite.set(tile.clone, { x: tile.x, y: tile.y, autoAlpha: 1 });
-
-              tile.draggable.startDrag(event.originalEvent);
-            }
-
-            // CREATE DRAGGABLE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            function createDraggable(tile) {
-
-              var clone   = tile.clone;
-              var wrapper = tile.wrapper;
-
-              tile.draggable = new Draggable(clone, {
-                onPress   : setActive,
-                onDrag    : collapseSpace,
-                onRelease : dropTile
+                element.on("mousedown touchstart", scope, startDraggable);
               });
 
-              return tile.draggable;
-              ///////
+              // START DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function startDraggable(event) {
 
-              function setActive() {
-                TweenLite.to(clone, 0.15, { scale: 1.2, autoAlpha: 0.75 });
+                var tile = event.data;
+
+                TweenLite.set(tile.element, { autoAlpha: 0 });
+                TweenLite.set(tile.clone, { x: tile.x, y: tile.y, autoAlpha: 1 });
+
+                tile.draggable.startDrag(event.originalEvent);
               }
 
-              function collapseSpace() {
-                if (!tile.moved) {
-                  if (!this.hitTest(wrapper)) {
-                    tile.moved = true;
-                    TweenLite.to(wrapper, 0.3, { width: 0 });
+              // CREATE DRAGGABLE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function createDraggable(tile) {
+
+                var clone   = tile.clone;
+                var wrapper = tile.wrapper;
+
+                tile.draggable = new Draggable(clone, {
+                  onPress   : setActive,
+                  onDrag    : collapseSpace,
+                  onRelease : dropTile
+                });
+
+                return tile.draggable;
+                ///////
+
+                function setActive() {
+                  TweenLite.to(clone, 0.15, { scale: 1.2, autoAlpha: 0.75 });
+                }
+
+                function collapseSpace() {
+                  if (!tile.moved) {
+                    if (!this.hitTest(wrapper)) {
+                      tile.moved = true;
+                      TweenLite.to(wrapper, 0.3, { width: 0 });
+                    }
                   }
                 }
-              }
 
-              function dropTile() {
+                function dropTile() {
 
-                var className = undefined;
+                  var className = undefined;
 
-                if (this.hitTest(dropPanel, threshold) && !tile.dropped) {
-                  dropPanel.append(wrapper);
-                  tile.dropped = true;
-                  className = "+=dropped";
+                  if (this.hitTest(dropPanel, threshold) && !tile.dropped) {
+                    dropPanel.append(wrapper);
+                    tile.dropped = true;
+                    className = "+=dropped";
+                  }
+
+                  moveBack(tile, className);
                 }
-
-                moveBack(tile, className);
               }
-            }
 
-            // MOVE BACK :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            function moveBack(tile, className) {
+              // MOVE BACK :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function moveBack(tile, className) {
 
-              var clone   = tile.clone;
-              var element = tile.element;
-              var wrapper = tile.wrapper;
+                var clone   = tile.clone;
+                var element = tile.element;
+                var wrapper = tile.wrapper;
 
-              TweenLite.to(wrapper, 0.2, { width: tile.width });
-              TweenLite.to(clone, 0.3, { scale: 1, autoAlpha: 1, x: tile.x, y: tile.y, onComplete: done });
+                TweenLite.to(wrapper, 0.2, { width: tile.width });
+                TweenLite.to(clone, 0.3, { scale: 1, autoAlpha: 1, x: tile.x, y: tile.y, onComplete: done });
 
-              if (className) TweenLite.to([element, clone], 0.3, { className: className });
+                if (className) TweenLite.to([element, clone], 0.3, { className: className });
 
-              function done() {
-                tile.moved = false;
-                TweenLite.set(clone, { autoAlpha: 0 });
-                TweenLite.set(element, { autoAlpha: 1 });
+                function done() {
+                  tile.moved = false;
+                  TweenLite.set(clone, { autoAlpha: 0 });
+                  TweenLite.set(element, { autoAlpha: 1 });
+                }
               }
-            }
 
-            // GET POSITION ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            function getPosition(wrapper, offset) {
+              // GET POSITION ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              function getPosition(wrapper, offset) {
 
-              var position1 = wrapper.offset();
-              var position2 = container.offset();
+                var position1 = wrapper.offset();
+                var position2 = container.offset();
 
-              return {
-                x: position1.left - position2.left + offset.left,
-                y: position1.top  - position2.top  + offset.top
-              };
-            }
-          index = index+1;
-        }, 1000);
+                return {
+                  x: position1.left - position2.left + offset.left,
+                  y: position1.top  - position2.top  + offset.top
+                };
+              }
 
+          }, 1000);
+      }else{
+        alert($scope.user_id + ", debes mover las 6 imagenes en el orden que muestre tu preferencia")
+      }
     }
-
   }
 
-  $scope.getRecommendations = function(){
-    console.log($scope.user_id);
+  var getRecommendations = function(){
     var survey = []
     for(var i = 0; i<5;i++){
       var images = $("#drop-panel"+i).find("img")
       var score = 10
       for(var j=0; j<6;j++){
-          survey.append({"piece":images[j].src,"score":10})
+          survey.push({"piece":images[j].src,"score":score})
           score = score - 2;
       }
     }
@@ -151,6 +153,12 @@ app.controller('MainController', function($scope) {
       {"survey":survey,"user_id":$scope.user_id})
     .then(function(response) {
         $scope.recommendations = response.recommendations;
+    }, function (rejection) {
+        if (rejection.status === 404) {
+            console.log("ERROR");
+        } else {
+            errorCallback(rejection);
+        }
     });
   }
 });
