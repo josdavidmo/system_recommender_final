@@ -1,9 +1,17 @@
-app.controller('MainController', ['$scope',function($scope,$http) {
-  $scope.steps_1 = steps[0];
-  $scope.steps_2 = steps[1];
-  $scope.steps_3 = steps[2];
-  $scope.steps_4 = steps[3];
-  $scope.steps_5 = steps[4];
+app.controller('MainController', function($scope,$http) {
+
+
+  $http.get("http://localhost:8000/system_recommender/artworks")
+  .then(function(response) {
+    $scope.steps_1 = response.data.slice(0,6);
+    $scope.steps_2 = response.data.slice(6,12);
+    $scope.steps_3 = response.data.slice(12,18);
+    $scope.steps_4 = response.data.slice(18,24);
+    $scope.steps_5 = response.data.slice(24,30);
+  }, function (rejection) {
+      console.log("Rechazado");
+  });
+
   $scope.user_id = ""
   $scope.recommendations = [];
 
@@ -162,4 +170,4 @@ app.controller('MainController', ['$scope',function($scope,$http) {
         }
     });
   }
-}]);
+});
