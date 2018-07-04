@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_pandas.managers import DataFrameManager
 
-
 class Author(models.Model):
     name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)

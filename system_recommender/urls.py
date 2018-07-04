@@ -6,8 +6,9 @@ from django.conf.urls import url
 
 
 from system_recommender import views
+from system_recommender.api import ArtworkList
 
 urlpatterns = [
-    url(r'^registry_survey$', views.registry_survey,
-        name='registry-survey')
-        ]
+    url(r'^artworks/$', ArtworkList.as_view()),
+    url(r'^registry_survey$', views.registry_survey, name='registry-survey')
+]
