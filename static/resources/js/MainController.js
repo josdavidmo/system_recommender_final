@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope,$http) {
+app.controller('MainController', ['$scope',function($scope,$http) {
   $scope.steps_1 = steps[0];
   $scope.steps_2 = steps[1];
   $scope.steps_3 = steps[2];
@@ -145,7 +145,7 @@ app.controller('MainController', function($scope,$http) {
       var images = $("#drop-panel"+i).find("img")
       var score = 10
       for(var j=0; j<6;j++){
-          survey.push({"piece":images[j].src,"score":score})
+          survey.push({"piece":images[j].alt,"score":score})
           score = score - 2;
       }
     }
@@ -157,8 +157,9 @@ app.controller('MainController', function($scope,$http) {
         if (rejection.status === 404) {
             console.log("ERROR");
         } else {
+          console.log("Rechazado");
             errorCallback(rejection);
         }
     });
   }
-});
+}]);

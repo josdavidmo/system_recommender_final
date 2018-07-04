@@ -1,6 +1,5 @@
-
 {% load static %}
-<html>
+<html ng-app="formlyApp" >
 <head>
     <title>Medición de Involucramiento y Liderazgo</title>
     <meta charset="UTF-8">
@@ -11,11 +10,12 @@
 
 
 </head>
-<body ng-app="formlyApp" ng-controller="MainController as vm">
+<body ng-controller="MainController" class="ng-scope">
   <main id="user_id" class="container col-md-8 col-md-offset-4">
     Nombre del usuario <br>
     <input ng-model="user_id" type="text">
   </main>
+  {% verbatim %}
   <main id="main0" class="container col-md-8 col-md-offset-4" style="display:none">
     <section id="top-bar0">
       <div id="clone-container0">
@@ -23,7 +23,7 @@
           <div id="tile-container0">
             <div class="tile-wrapper" ng-repeat="piece in steps_1">
               <div class="tile0">
-                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+                <img src="{{piece.url}}" alt="{{piece.id}}" width="200" height="300">
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
           <div id="tile-container1">
             <div class="tile-wrapper" ng-repeat="piece in steps_2">
               <div class="tile1">
-                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+                <img src="{{piece.url}}" alt="{{piece.id}}" width="200" height="300">
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
           <div id="tile-container2">
             <div class="tile-wrapper" ng-repeat="piece in steps_3">
               <div class="tile2">
-                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+                <img src="{{piece.url}}" alt="{{piece.id}}" width="200" height="300">
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
           <div id="tile-container3">
             <div class="tile-wrapper" ng-repeat="piece in steps_4">
               <div class="tile3">
-                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+                <img src="{{piece.url}}" alt="{{piece.id}}" width="200" height="300">
               </div>
             </div>
           </div>
@@ -99,7 +99,7 @@
           <div id="tile-container4">
             <div class="tile-wrapper" ng-repeat="piece in steps_5">
               <div class="tile4">
-                <img id_meta="{{piece.id}}" src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+                <img src="{{piece.url}}" alt="{{piece.id}}" width="200" height="300">
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@
           <div id="tile-container0">
             <div class="tile-wrapper" ng-repeat="piece in recommendations">
               <div class="tile0">
-                <img src="{{piece.url}}" alt="{{piece.title}}" width="200" height="300">
+                <img src="{{piece.url}}" width="200" height="300">
               </div>
             </div>
           </div>
@@ -127,6 +127,7 @@
     </section>
   </main>
   <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
+  {% endverbatim %}
 </body>
 
     <!-- Application Dependencies -->
