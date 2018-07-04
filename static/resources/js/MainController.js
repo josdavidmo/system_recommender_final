@@ -157,7 +157,7 @@ app.controller('MainController', function($scope,$http) {
           score = score - 2;
       }
     }
-    $http.post("http://localhost:8000/system_recommender/getRecommendations",
+    $http.post("http://localhost:8000/system_recommender/recommendations/",
       {"survey":survey,"user_id":$scope.user_id})
     .then(function(response) {
         $scope.recommendations = response.recommendations;

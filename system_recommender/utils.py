@@ -106,13 +106,13 @@ class item_similarity_recommender_py():
                 # Get unique listeners (users) of piece (item) j
                 users_j = user_pieces_users[j]
                 genero1 = self.metadata[self.metadata[self.item_id]
-                                        == all_pieces[i]]['genero'].values[0]
+                                        == all_pieces[i]]['gender__id'].values[0]
                 genero2 = self.metadata[self.metadata[self.item_id]
-                                        == user_pieces[j]]['genero'].values[0]
+                                        == user_pieces[j]]['gender__id'].values[0]
                 autor1 = self.metadata[self.metadata[self.item_id]
-                                       == all_pieces[i]]['autor'].values[0]
+                                       == all_pieces[i]]['author__id'].values[0]
                 autor2 = self.metadata[self.metadata[self.item_id]
-                                       == user_pieces[j]]['autor'].values[0]
+                                       == user_pieces[j]]['author__id'].values[0]
                 # Calculate intersection of listeners of pieces i and j
                 users_intersection = users_i.intersection(users_j)
                 if genero1 == genero2 and autor1 == autor2:

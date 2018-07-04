@@ -23,14 +23,14 @@ class RecommendationList(APIView):
         qs = Artwork.objects.all().extra(select={'artwork__id': 'id'}).values(
             'artwork__id', 'title', 'url', 'author__id', 'gender__id')
         piece_df_2 = qs.to_dataframe()
-        piece_df_2['obraautor'] = piece_df_2['title'].map(
-            str) + " - " + piece_df_2['author_id']
+        piece_df_2['artwork__id'] = piece_df_2['artwork__id'].map(str)
+        piece_df_2['obraautor'] = piece_df_2['artwork__id'].map(str) + " - " + piece_df_2['author__id'].map(str)
         # Merge the two dataframes above to create input dataframe for recommender systems
+
         piece_df = pandas.merge(piece_df_1, piece_df_2,
                                 on="artwork__id", how="left")
         # Merge piece title and artist_name columns to make a merged column
-        piece_df['obraautor'] = piece_df['artwork__id'].map(
-            str) + " - " + piece_df['author_id']
+        piece_df['obraautor'] = piece_df['artwork__id'].map(str) + " - " + piece_df['author__id'].map(str)
 
         users = piece_df['user__id'].unique()
         paints = piece_df['artwork__id'].unique()
@@ -50,26 +50,23 @@ class RecommendationList(APIView):
         qs = UserRating.objects.all().values('user__id', 'artwork__id', 'rating')
         piece_df_1 = qs.to_dataframe()
         username = request.data["user_id"]
+        user = User.objects.get(username=username)
         results = request.data["survey"]
-        print username, results
         matrix = []
         for result in results:
-            user = User.objects.get(username=username)
             userRating = UserRating()
             userRating.user = user
             userRating.artwork_id = result["piece"]
             userRating.rating = result["score"]
-            UserRating.save()
-            matrix.append([result["piece"], result["score"]])
+            userRating.save()
+            matrix.append([username, result["piece"], result["score"]])
         results = pandas.DataFrame(
             matrix, columns=["user__id", "artwork__id", "rating"])
         results_total = piece_df_1.append(results)
-        recommendations = self.get_recommendation(
-            user_id, results_total, piece_df_1)
+        recommendations = self.get_recommendation(results_total, user.id)
         pieces = []
         for index, row in recommendations.iterrows():
             pieces.append(row['obra'])
-        print pieces
         return HttpResponse(pieces)
 
 
