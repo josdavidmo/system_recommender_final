@@ -73,8 +73,8 @@ class RecommendationList(APIView):
         pieces = []
         for index, row in recommendations.iterrows():
             pieces.append(int(row['obra']))
-        print pieces
-        serializer = Artwork.objects.filter(id__in=pieces)
+        artworks = Artwork.objects.filter(id__in=pieces)
+        serializer = ArtworkSerializer(artworks, many=True)
         return Response(serializer.data)
 
 

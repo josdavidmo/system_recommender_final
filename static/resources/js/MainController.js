@@ -160,6 +160,7 @@ app.controller('MainController', function($scope,$http) {
     $http.post("http://localhost:8000/system_recommender/recommendations/",
       {"survey":survey,"user_id":$scope.user_id})
     .then(function(response) {
+      console.log(response);
         $scope.recommendations = response.data;
         $("#main4").hide();
         $("#main5").show();
