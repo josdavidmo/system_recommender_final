@@ -18,7 +18,7 @@ app.controller('MainController', function($scope,$http) {
   var index = -1;
   $scope.changeSurvey = function(){
     $("#user_id").hide()
-    if (index==5) {
+    if (index==4) {
       getRecommendations();
     }else{
       var images = $("#drop-panel"+index).find("img")
@@ -160,14 +160,11 @@ app.controller('MainController', function($scope,$http) {
     $http.post("http://localhost:8000/system_recommender/recommendations/",
       {"survey":survey,"user_id":$scope.user_id})
     .then(function(response) {
-        $scope.recommendations = response.recommendations;
+        $scope.recommendations = response.data;
+        $("#main4").hide();
+        $("#main5").show();
     }, function (rejection) {
-        if (rejection.status === 404) {
-            console.log("ERROR");
-        } else {
-          console.log("Rechazado");
-            errorCallback(rejection);
-        }
+          alert(rejection)
     });
   }
 });

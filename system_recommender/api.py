@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from sklearn.cross_validation import train_test_split
 
 from models import Artwork, UserRating
+from django.http import JsonResponse
 from rest_framework.response import Response
 from serializers import ArtworkSerializer
 from utils import item_similarity_recommender_py
@@ -32,17 +33,12 @@ class RecommendationList(APIView):
         # Merge piece title and artist_name columns to make a merged column
         piece_df['obraautor'] = piece_df['artwork__id'].map(str) + " - " + piece_df['author__id'].map(str)
 
-        users = piece_df['user__id'].unique()
-        paints = piece_df['artwork__id'].unique()
-
         train_data, test_data = train_test_split(
             piece_df, test_size=0.20, random_state=0)
         is_model = item_similarity_recommender_py()
-        is_model.create(train_data, piece_df_2, 'user__id', 'author__id')
+        is_model.create(train_data, piece_df_2, 'user__id', 'artwork__id')
 
-        user_id = users[user_id]
         user_items = is_model.get_user_items(user_id)
-
         # Recommend pieces for the user using personalized model
         return is_model.recommend(user_id)
 
@@ -50,7 +46,15 @@ class RecommendationList(APIView):
         qs = UserRating.objects.all().values('user__id', 'artwork__id', 'rating')
         piece_df_1 = qs.to_dataframe()
         username = request.data["user_id"]
-        user = User.objects.get(username=username)
+        user = User.objects.filter(username=username)
+        if not user.exists():
+            user = User()
+            user.password = username
+            user.is_superuser = True
+            user.username = username
+            user.save()
+        else:
+            user = user[0]
         results = request.data["survey"]
         matrix = []
         for result in results:
@@ -59,15 +63,16 @@ class RecommendationList(APIView):
             userRating.artwork_id = result["piece"]
             userRating.rating = result["score"]
             userRating.save()
-            matrix.append([username, result["piece"], result["score"]])
+            matrix.append([user.id, result["piece"], result["score"]])
         results = pandas.DataFrame(
             matrix, columns=["user__id", "artwork__id", "rating"])
         results_total = piece_df_1.append(results)
         recommendations = self.get_recommendation(results_total, user.id)
         pieces = []
         for index, row in recommendations.iterrows():
+            print row
             pieces.append(row['obra'])
-        return HttpResponse(pieces)
+        return JsonResponse(pieces,safe=False)
 
 
 class ArtworkList(APIView):
