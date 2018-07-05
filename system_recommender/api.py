@@ -25,13 +25,15 @@ class RecommendationList(APIView):
             'artwork__id', 'title', 'url', 'author__id', 'gender__id')
         piece_df_2 = qs.to_dataframe()
         piece_df_2['artwork__id'] = piece_df_2['artwork__id'].map(str)
-        piece_df_2['obraautor'] = piece_df_2['artwork__id'].map(str) + " - " + piece_df_2['author__id'].map(str)
+        piece_df_2['obraautor'] = piece_df_2['artwork__id'].map(
+            str) + " - " + piece_df_2['author__id'].map(str)
         # Merge the two dataframes above to create input dataframe for recommender systems
 
         piece_df = pandas.merge(piece_df_1, piece_df_2,
                                 on="artwork__id", how="left")
         # Merge piece title and artist_name columns to make a merged column
-        piece_df['obraautor'] = piece_df['artwork__id'].map(str) + " - " + piece_df['author__id'].map(str)
+        piece_df['obraautor'] = piece_df['artwork__id'].map(
+            str) + " - " + piece_df['author__id'].map(str)
 
         train_data, test_data = train_test_split(
             piece_df, test_size=0.20, random_state=0)
@@ -70,9 +72,10 @@ class RecommendationList(APIView):
         recommendations = self.get_recommendation(results_total, user.id)
         pieces = []
         for index, row in recommendations.iterrows():
-            print row
-            pieces.append(row['obra'])
-        return JsonResponse(pieces,safe=False)
+            pieces.append(int(row['obra']))
+        print pieces
+        serializer = Artwork.objects.filter(id__in=pieces)
+        return Response(serializer.data)
 
 
 class ArtworkList(APIView):
