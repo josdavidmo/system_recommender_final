@@ -111,22 +111,28 @@
       <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
     </section>
   </main>
-  <main id="main5" class="container col-md-8 col-md-offset-4" style="display:none">
-    <section id="top-bar0">
-      <div id="clone-container0">
-        <div id="scroll-box0">
-          <div id="tile-container0">
-            <div class="tile-wrapper" ng-repeat="piece in recommendations">
-              <div class="tile0">
-                <img src="{{piece.url}}" width="200" height="300">
-              </div>
-            </div>
-          </div>
+  <main id="main5" class="container col-md-8 col-md-offset-4">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="..." alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="..." alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="..." alt="Third slide">
         </div>
       </div>
-    </section>
-  </main>
-  <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
   {% endverbatim %}
 </body>
 

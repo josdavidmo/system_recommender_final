@@ -48,15 +48,10 @@ class RecommendationList(APIView):
         qs = UserRating.objects.all().values('user__id', 'artwork__id', 'rating')
         piece_df_1 = qs.to_dataframe()
         username = request.data["user_id"]
-        user = User.objects.filter(username=username)
-        if not user.exists():
-            user = User()
-            user.password = username
-            user.is_superuser = True
-            user.username = username
-            user.save()
-        else:
-            user = user[0]
+        user = User.objects.get_or_create(username=username)
+        user, created = User.objects.get_or_create(username=username)
+        user.set_password(username)
+        user.save()
         results = request.data["survey"]
         matrix = []
         for result in results:
