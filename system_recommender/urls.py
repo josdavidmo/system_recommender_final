@@ -4,10 +4,8 @@ system_recommender URL Configuration
 
 from django.conf.urls import url
 
-
 from system_recommender import views
-from system_recommender.api import ArtworkList
-from system_recommender.api import RecommendationList
+from system_recommender.api import ArtworkList, RecommendationList
 
 urlpatterns = [
     url(r'^artworks/$', ArtworkList.as_view()),

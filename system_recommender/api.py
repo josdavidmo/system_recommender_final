@@ -3,24 +3,25 @@ from __future__ import unicode_literals
 
 import numpy as np
 import pandas
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from sklearn.cross_validation import train_test_split
 
 from models import Artwork, UserRating
-from django.http import JsonResponse
-from rest_framework.response import Response
 from serializers import ArtworkSerializer
 from utils import item_similarity_recommender_py
-from django.contrib.auth.models import User
 
 
 class RecommendationList(APIView):
+
     """
     used to manage users recommendations
     """
 
     def get_recommendation(self, piece_df_1, user_id):
-        # Read piece  metadata
+        # Read piece metadata
         qs = Artwork.objects.all().extra(select={'artwork__id': 'id'}).values(
             'artwork__id', 'title', 'url', 'author__id', 'gender__id')
         piece_df_2 = qs.to_dataframe()
@@ -28,7 +29,6 @@ class RecommendationList(APIView):
         piece_df_2['obraautor'] = piece_df_2['artwork__id'].map(
             str) + " - " + piece_df_2['author__id'].map(str)
         # Merge the two dataframes above to create input dataframe for recommender systems
-
         piece_df = pandas.merge(piece_df_1, piece_df_2,
                                 on="artwork__id", how="left")
         # Merge piece title and artist_name columns to make a merged column
@@ -48,7 +48,6 @@ class RecommendationList(APIView):
         qs = UserRating.objects.all().values('user__id', 'artwork__id', 'rating')
         piece_df_1 = qs.to_dataframe()
         username = request.data["user_id"]
-        user = User.objects.get_or_create(username=username)
         user, created = User.objects.get_or_create(username=username)
         user.set_password(username)
         user.save()
@@ -76,7 +75,7 @@ class RecommendationList(APIView):
 class ArtworkList(APIView):
 
     """
-    List all artsworks.
+    List all artworks.
     """
 
     def get(self, request, format=None):
