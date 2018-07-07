@@ -1,6 +1,5 @@
 app.controller('MainController', function($scope,$http) {
 
-
   $http.get("http://localhost:8000/system_recommender/artworks")
   .then(function(response) {
     $scope.steps_1 = response.data.slice(0,6);
@@ -148,6 +147,7 @@ app.controller('MainController', function($scope,$http) {
   }
 
   var getRecommendations = function(){
+    $('.modal').modal('show');
     var survey = []
     for(var i = 0; i<5;i++){
       var images = $("#drop-panel"+i).find("img")
@@ -162,6 +162,7 @@ app.controller('MainController', function($scope,$http) {
     .then(function(response) {
       console.log(response);
         $scope.recommendations = response.data;
+        $('.modal').modal('hide');
         $("#main4").hide();
         $("#main5").show();
     }, function (rejection) {

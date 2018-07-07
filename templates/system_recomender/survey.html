@@ -7,13 +7,30 @@
     <link rel="stylesheet" type="text/css" href="{% static 'resources/css/styles.css' %}">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/slides/carousel-3d.css' %}">
+    <style>
+    .footer {
+        position: absolute;
+        bottom: -40;
+        width: 100%;
+        height: 60px;
+        padding: 5px;
+        line-height: 50px;
+        background-color: #343a40!important;
+    }
+    </style>
 </head>
-<body ng-controller="MainController" class="ng-scope">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <h3 style="color:white">Museo virtual</h3>
+    </nav>
+<body ng-controller="MainController" class="ng-scope" style="margin-top:100px">
   <main id="user_id" class="container col-md-8 col-md-offset-4">
-    Nombre del usuario <br>
-    <input ng-model="user_id" type="text">
+    <div class="jumbotron" style="background-color:white">
+      <h1>Nombre del usuario</h1>
+      <input ng-model="user_id" type="text" class="form-control">
+      <a class="btn btn-lg btn-primary" style="margin:20px;color:white" ng-click="changeSurvey()" role="button">Siguiente</a>
+    </div>
+
   </main>
   {% verbatim %}
   <main id="main0" class="container col-md-8 col-md-offset-4" style="display:none">
@@ -32,8 +49,9 @@
     </section>
     <section class="content"></section>
     <section id="drop-panel0">
-      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+      <h3>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</h3>
     </section>
+    <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
   </main>
   <main id="main1" class="container col-md-8 col-md-offset-4" style="display:none">
     <section id="top-bar1">
@@ -51,8 +69,9 @@
     </section>
     <section class="content"></section>
     <section id="drop-panel1">
-      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+      <h3>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</h3>
     </section>
+    <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
   </main>
   <main id="main2" class="container col-md-8 col-md-offset-4" style="display:none">
     <section id="top-bar2">
@@ -70,8 +89,9 @@
     </section>
     <section class="content"></section>
     <section id="drop-panel2">
-      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+      <h3>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</h3>
     </section>
+    <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
   </main>
   <main id="main3" class="container col-md-8 col-md-offset-4" style="display:none">
     <section id="top-bar3">
@@ -89,8 +109,9 @@
     </section>
     <section class="content"></section>
     <section id="drop-panel3">
-      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+      <h3>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</h3>
     </section>
+    <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
   </main>
   <main id="main4" class="container col-md-8 col-md-offset-4" style="display:none">
     <section id="top-bar4">
@@ -108,37 +129,65 @@
     </section>
     <section class="content"></section>
     <section id="drop-panel4">
-      <header>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</header>
+      <h3>Arrastre las obras según su interés, siendo la primera la que más le gusta, y la última la que menos le agrada</h3>
     </section>
+    <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
   </main>
+  <div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
+</div>
   <main id="main5" class="container col-md-8 col-md-offset-4" style="display:none">
-    <section id="top-bar0">
-      <div id="clone-container0">
-        <div id="scroll-box0">
-          <div id="tile-container0">
-            <div class="tile-wrapper" ng-repeat="piece in recommendations">
-              <div class="tile0">
-                <img src="{{piece.url}}" width="200" height="300">
-              </div>
-            </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 400px;height: 500px;margin: 30 auto">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item" ng-class="$index==0 ? 'active' : ''" ng-repeat="piece in recommendations">
+          <img class="d-block w-100" src="{{piece.url}}" alt="First slide">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{piece.title}}</h5>
+            <p>{{piece.author}}</p>
           </div>
         </div>
       </div>
-    </section>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
   </main>
-  <button class="btn float-right btn-primary" style="margin:20px" ng-click="changeSurvey()">Siguiente</button>
-  {% endverbatim %}
+  <footer class="footer">
+      <div class="container">
+        <center><h7 style="color:#FFFFFF">Nancy Gélvez </h7></center>
+      </div>
+    </footer>
+{% endverbatim %}
 </body>
 
     <!-- Application Dependencies -->
     <script src="{% static 'vendors/jquery/jquery-3.3.1.js' %}"></script>
-    <script src="{% static 'vendors/api-check/api-check.js' %}"></script>
-    <script src="{% static 'vendors/angular/angular.js' %}"></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script data-require="angular.js@1.3.15" data-semver="1.3.15" src="https://code.angularjs.org/1.3.15/angular.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/utils/Draggable.min.js'></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Application Scripts -->
     <script src="{% static 'resources/js/variables.js' %}"></script>
@@ -152,6 +201,7 @@
     <script>
     $( document ).ready(function() {
       $(".radio-group").addClass("row");
+      $('.carousel').carousel()
 
     });
     </script>
